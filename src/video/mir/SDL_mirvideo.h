@@ -29,14 +29,16 @@
 
 #include <mir_toolkit/mir_client_library.h>
 
-#define _THIS	SDL_VideoDevice *this
+#define _THIS   SDL_VideoDevice *this
 
 struct SDL_PrivateVideoData {
     MirConnection* connection;
     MirSurface* surface;
+    MirPixelFormat pixel_format;
 
     struct Queue* buffer_queue;
 
+    SDL_bool mode_changed;
     SDL_Rect** modelist;
 };
 
