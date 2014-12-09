@@ -25,6 +25,8 @@
 #include "../../events/SDL_events_c.h"
 #include <xkbcommon/xkbcommon.h>
 
+#define MIN_KEYCODE 8
+
 static SDLKey MISC_keymap[256];
 
 void Mir_InitKeymap()
@@ -216,9 +218,9 @@ void Mir_HandleKeyEvent(MirSurface const* surface, MirKeyEvent const* key_event)
     size = xkb_keysym_to_utf8(key_event->key_code, text, sizeof text);
 
     SDL_keysym keysym;
-    keysym.sym = key;
-    keysym.scancode = key_event->scan_code;
-    keysym.mod = KMOD_NONE;
+    keysym.sym      = key;
+    keysym.scancode = key_event->scan_code + MIN_KEYCODE;
+    keysym.mod      = KMOD_NONE;
     memcpy(&keysym.unicode, text, size);
 
     SDL_PrivateKeyboard(key_state, &keysym);
